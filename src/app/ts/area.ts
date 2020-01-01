@@ -1,7 +1,9 @@
 export class Area {
 
-  constructor( private name: string, private mans: number, private build: number, private level: number,
-               private buildTime: number, private cost: number, private rollback: number,
-               private tenderTime: number, private materials: number, private trucks: number) {
+  constructor(
+    public type: string, public name: string, public build: number, public health: number,
+    public classImage: string, public worker: number, public wood: number, public woodHere: number,
+    public stone: number, public stoneHere: number
+  ) {
   }
 }

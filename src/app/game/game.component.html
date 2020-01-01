@@ -10,64 +10,80 @@
       </div>
       <div class="col-sm-6">
         <img src="assets/img/gold.png" height="40" width="40" title="золото"/>
-        <strong>{{ dataService.money | number: '3.2-2'}}</strong>
+        <strong>{{ dataService.gold | number: '3.2-2'}}</strong>
+        &nbsp;&nbsp;
+        <img src="assets/img/man.png" height="40" width="40" title="рабочие"/>
+        <strong>{{ dataService.allMans | number }}</strong>
         &nbsp;&nbsp;
         <img src="assets/img/food.png" height="40" width="40" title="еда"/>
-          <strong>{{ dataService.food | number }}</strong>
+        <strong>{{ dataService.food | number }}</strong>
         &nbsp;&nbsp;
         <img src="assets/img/wood.png" height="40" width="40" title="дерево"/>
-          <strong>{{ dataService.wood | number }}</strong>
+        <strong>{{ dataService.wood | number }}</strong>
         &nbsp;&nbsp;
         <img src="assets/img/stone.png" height="40" width="40" title="камень"/>
-          <strong>{{ dataService.stone | number }}</strong>
-        &nbsp;&nbsp;
-        <img src="assets/img/horse.png" height="40" width="40" title="лошади"/>
-          <strong>{{ dataService.horse | number }}</strong>
+        <strong>{{ dataService.stone | number }}</strong>
         &nbsp;&nbsp;
         <img src="assets/img/weapon.png" height="40" width="40" title="оружие"/>
-          <strong>{{ dataService.weapon | number }}</strong>
+        <strong>{{ dataService.weapon | number }}</strong>
 
       </div>
       <div class="col-sm-3">
-        <button class="btn btn-primary float-right">построить <i class="fa fa-wrench"></i></button>
+        <button class="btn btn-success" (click)="this.buildService.createStructure('forest')">лес</button>
+        <button class="btn btn-success" (click)="this.buildService.createStructure('stone')">камень</button>
       </div>
     </div>
   </div>
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <div class="block">
-          <i class="fa fa-male"></i><a> - {{dataService.allMans}} </a>
-          <button class="btn btn-outline-success" (click)="buyWorker()">{{dataService.priceMan}}</button><br>
-          <a>занятые </a><i class="fa fa-male"></i><a> - {{dataService.workMans}}</a><br>
-          <i class="fa fa-truck"></i><a> - {{dataService.allTrucks}} </a>
-          <button class="btn btn-outline-success" (click)="buyTruck()">{{dataService.priceTruck}}</button><br>
-          <a>занятые </a><i class="fa fa-truck"></i><a> - {{dataService.workTrucks}}</a><br>
-          <i class="fa fa-cubes"></i><a> - {{dataService.allMaterials | number: '3.2-2'}} </a>
-          <button class="btn btn-outline-success" (click)="buyMaterials()">{{dataService.priceMaterial}}</button><br>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="block">
-          <a>уровень <i class="fa fa-signal"></i> - {{dataService.playerLevel}}</a><br>
-          <a>построено </a><i class="fa fa-building-o"></i><a> - {{dataService.endAreas}}</a><br>
-          <a>заработано <i class="fa fa-money"></i> - {{dataService.profit}}</a><br>
-        </div>
-      </div>
-      <div class="col-sm-3">
-        <div class="block"></div>
-      </div>
-      <div class="col-sm-3">
-        <div class="block">
-          <h6>{{this.dataService.activeObj.obj.name}}</h6>
-          <div *ngIf="this.dataService.activeObj.obj.count">
-            <a>{{this.dataService.activeObj.obj.count}}</a>
-            <button class="btn btn-success">собрать</button>
+          <div *ngIf="this.dataService.activeMeter.obj">
+            <h6>{{this.dataService.activeMeter.obj.name}} </h6>
+            <div *ngIf="itIsArea(this.dataService.activeMeter.obj)">
+              <div *ngIf="this.dataService.activeMeter.obj.wood">
+                <a>доски - {{this.dataService.activeMeter.obj.woodHere}} / {{this.dataService.activeMeter.obj.wood}}</a><br>
+                <a>камень - {{this.dataService.activeMeter.obj.stoneHere}}
+                  / {{this.dataService.activeMeter.obj.stone}}</a><br>
+                <a>рабочие - {{this.dataService.activeMeter.obj.worker}}</a>&nbsp;
+                <div class="btn-group">
+                  <button class="btn btn-success" (click)="this.buildService.addWorker()">+</button>
+                  <button class="btn btn-danger" (click)="this.buildService.delWorker()">-</button>
+                </div>
+                <br>
+                <a>построено - {{this.dataService.activeMeter.obj.build}}
+                  / {{this.dataService.activeMeter.obj.health}}</a>
+              </div>
+            </div>
+            <div *ngIf="this.dataService.activeMeter.obj.res">
+              <a>{{this.dataService.activeMeter.obj.res}} - {{this.dataService.activeMeter.obj.count}}</a>
+              <button class="btn btn-success" (click)="getResurs()">собрать</button>
+            </div>
           </div>
 
         </div>
       </div>
+      <div class="col-sm-6">
+        <div class="block">
+          <div *ngIf="!this.dataService.activeMeter.obj">
+            <h6>пусто</h6>
+            <button class="btn btn-primary"
+                    (click)="this.buildService.createArea('castle')"
+            >замок
+            </button>
+            <button class="btn btn-primary"
+                    (click)="this.buildService.createArea('farm')"
+            >ферма
+            </button>
+            <button class="btn btn-primary"
+                    (click)="this.buildService.createArea('dom')"
+            >изба
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <hr>

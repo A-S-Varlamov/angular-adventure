@@ -12,7 +12,6 @@
     <input class="text-center" placeholder="размер"
            [(ngModel)]="dataService.size"
            (change)="generate(dataService.size)">
-    <button class="btn btn-success" (click)="createForest()">лес</button>
   </div>
 </div>
 <div class="world" #world>
@@ -28,7 +27,10 @@
            [attr.coordY]="j"
            [ngClass]="getClass(i, j)"
            (click)="clickMeter($event)"
-      ></div>
+      >
+        <div class="health hidden"></div>
+        <div class="build hidden"></div>
+      </div>
     </div>
   </div>
 
