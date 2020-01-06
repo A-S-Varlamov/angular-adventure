@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {DataService} from './data.service';
+import {BuildService} from '../services/build.service';
 import {Meter} from '../ts/meter';
 import {Area} from '../ts/area';
 
@@ -8,7 +9,7 @@ import {Area} from '../ts/area';
 })
 export class TimerService {
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private buildService: BuildService) {
   }
 
   // все что происходит за еденицу времени
@@ -16,16 +17,11 @@ export class TimerService {
     this.dataService.arrMapObj.forEach(
       (entry) => {
         entry.forEach(
-          (obj) => {
+          (meter) => {
 
 
-            if (obj.obj) {
-              if (obj.obj.worker > 0) {
-                if (obj.obj instanceof Area) {
-                  obj.obj.build += obj.obj.worker;
-                }
-              }
-            }
+            this.workerWork(meter);
+            this.buildingEnd(meter);
 
 
           });
@@ -48,5 +44,24 @@ export class TimerService {
   randomInt(min: number, max: number) {
     const rand = min + Math.random() * (max + 1 - min);
     return Math.floor(rand);
+  }
+
+  buildingEnd(meter) {
+    if (meter.obj instanceof Area) {
+      if (meter.obj.build >= meter.obj.maxHealth) {
+        this.dataService.allMans += meter.obj.worker;
+        this.buildService.createStructure(meter.obj.type, meter.x, meter.y);
+      }
+    }
+  }
+
+  workerWork(meter) {
+    if (meter.obj) {
+      if (meter.obj.worker > 0) {
+        if (meter.obj instanceof Area) {
+          meter.obj.build += meter.obj.worker;
+        }
+      }
+    }
   }
 }

@@ -1,5 +1,6 @@
 import {Component, ElementRef, ViewChild, OnInit, Renderer2} from '@angular/core';
 import {DataService} from '../services/data.service';
+import {BuildService} from '../services/build.service';
 import {TimerService} from '../services/timer.service';
 import {Meter} from '../ts/meter';
 import {Structure} from '../ts/structure';
@@ -16,7 +17,8 @@ export class WorldComponent implements OnInit {
   private activeMeter: number;
   private lastMeter: number;
 
-  constructor(private dataService: DataService, private timerService: TimerService, private r: Renderer2) {
+  constructor(private dataService: DataService, private buildService: BuildService,
+              private timerService: TimerService, private r: Renderer2) {
   }
 
   // генерация матрицы мира и отрисовка
@@ -26,6 +28,14 @@ export class WorldComponent implements OnInit {
       this.dataService.arrMapObj[i] = [];
       for (let j = 0; j < this.dataService.height; j++) {
         this.dataService.arrMapObj[i][j] = new Meter(i, j);
+
+        if (this.dataService.level1[j][i] === 1) {
+          this.dataService.arrMapObj[i][j].obj = this.buildService.createStructure('forest', i, j);
+        }
+        if (this.dataService.level1[j][i] === 2) {
+          this.dataService.arrMapObj[i][j].obj = this.buildService.createStructure('stone', i, j);
+        }
+
       }
     }
 
@@ -66,7 +76,7 @@ export class WorldComponent implements OnInit {
     this.generate(this.dataService.size);
   }
 
-  getClass( x, y ) {
+  getClass(x, y) {
     if (this.dataService.arrMapObj[x][y].obj) {
       return this.dataService.arrMapObj[x][y].obj.classImage;
     }

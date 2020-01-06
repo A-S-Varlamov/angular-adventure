@@ -1,5 +1,3 @@
-import {Structure} from './structure';
-import {Area} from '../ts/area';
 import {Man} from './man';
 
 export class Meter {

@@ -5,8 +5,8 @@
         <div class="btn-group float-left">
           <button class="btn btn-success" (click)="timerService.startTime()">start</button>
           <button class="btn btn-danger" (click)="timerService.stopTime()">stop</button>
-          <a>&nbsp;<i class="fa fa-clock-o"></i> - {{dataService.time}}</a><br>
         </div>
+        <a>&nbsp;<i class="fa fa-clock-o"></i> - {{dataService.time}}</a><br>
       </div>
       <div class="col-sm-6">
         <img src="assets/img/gold.png" height="40" width="40" title="золото"/>
@@ -29,8 +29,12 @@
 
       </div>
       <div class="col-sm-3">
-        <button class="btn btn-success" (click)="this.buildService.createStructure('forest')">лес</button>
-        <button class="btn btn-success" (click)="this.buildService.createStructure('stone')">камень</button>
+        <button class="btn btn-success" (click)="this.buildService
+          .createStructure('forest', this.dataService.activeMeter.x, this.dataService.activeMeter.y)
+        ">лес</button>
+        <button class="btn btn-success" (click)="this.buildService
+          .createStructure('stone', this.dataService.activeMeter.x, this.dataService.activeMeter.y)
+        ">камень</button>
       </div>
     </div>
   </div>
@@ -48,12 +52,12 @@
                   / {{this.dataService.activeMeter.obj.stone}}</a><br>
                 <a>рабочие - {{this.dataService.activeMeter.obj.worker}}</a>&nbsp;
                 <div class="btn-group">
-                  <button class="btn btn-success" (click)="this.buildService.addWorker()">+</button>
-                  <button class="btn btn-danger" (click)="this.buildService.delWorker()">-</button>
+                  <button class="btn btn-success" (click)="this.dataService.activeMeter.obj.addWorker()">+</button>
+                  <button class="btn btn-danger" (click)="this.dataService.activeMeter.obj.delWorker()">-</button>
                 </div>
                 <br>
                 <a>построено - {{this.dataService.activeMeter.obj.build}}
-                  / {{this.dataService.activeMeter.obj.health}}</a>
+                  / {{this.dataService.activeMeter.obj.maxHealth}}</a>
               </div>
             </div>
             <div *ngIf="this.dataService.activeMeter.obj.res">

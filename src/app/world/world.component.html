@@ -28,8 +28,20 @@
            [ngClass]="getClass(i, j)"
            (click)="clickMeter($event)"
       >
-        <div class="health hidden"></div>
-        <div class="build hidden"></div>
+        <div *ngIf="dataService.arrMapObj[i][j].obj">
+          <div *ngIf="dataService.arrMapObj[i][j].obj.health < dataService.arrMapObj[i][j].obj.maxHealth">
+            <div class="health" [ngStyle]="
+              {'width': dataService.arrMapObj[i][j].obj.health / dataService.arrMapObj[i][j].obj.health * 100 + '%'}
+            "></div>
+          </div>
+        </div>
+        <div *ngIf="dataService.arrMapObj[i][j].obj">
+          <div *ngIf="dataService.arrMapObj[i][j].obj.build">
+            <div class="build" [ngStyle]="
+              {'width': dataService.arrMapObj[i][j].obj.build / dataService.arrMapObj[i][j].obj.maxHealth * 100 + '%'}
+            "></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
