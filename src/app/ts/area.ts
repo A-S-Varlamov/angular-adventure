@@ -46,5 +46,6 @@ export class Area {
         this.worker--;
       }
     }
+
   }
 }

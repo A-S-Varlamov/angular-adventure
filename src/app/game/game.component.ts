@@ -1,9 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {DataService} from '../services/data.service';
 import {TimerService} from '../services/timer.service';
-import {Man} from '../ts/man';
-import {BuildService} from '../services/build.service';
-import {Area} from '../ts/area';
 
 @Component({
   selector: 'app-game',
@@ -13,30 +10,42 @@ import {Area} from '../ts/area';
 
 export class GameComponent {
 
-  constructor(
-    private dataService: DataService,
-    private timerService: TimerService,
-    private buildService: BuildService
-  ) {
+  constructor( private dataService: DataService, private timerService: TimerService ) {
   }
 
-  itIsArea(obj) {
-    if (obj instanceof Area) {
-      return true;
-    } else {
-      return false;
+  // нанять строителя
+  buyWorker() {
+    if (this.dataService.money >= this.dataService.priceMan) {
+      this.dataService.money -= this.dataService.priceMan;
+      this.dataService.allMans++;
     }
   }
 
-  getResurs() {
+  // нанять строителя
+  buyTruck() {
+    if (this.dataService.money >= this.dataService.priceTruck) {
+      this.dataService.money -= this.dataService.priceTruck;
+      this.dataService.allTrucks++;
+    }
+  }
+
+  // купить стройматериалы
+  buyMaterials() {
+    if (this.dataService.money >= this.dataService.priceMaterial) {
+      this.dataService.money -= this.dataService.priceMaterial;
+      this.dataService.allMaterials += this.dataService.countMaterial;
+    }
+  }
+
+  log(s) {
+    console.log(s);
+  }
+
+  getWood() {
     if (this.dataService.allMans > 0) {
       this.dataService.allMans -= 1;
-      if (!this.dataService.activeMeter.standUp) {
-        this.dataService.activeMeter.standUp = new Man('рабочий', 'worker', 1, 'worker');
-      } else {
-        this.dataService.activeMeter.standUp.count++;
-      }
+      this.dataService.workMans += 1;
+      this.dataService.activeObj
     }
   }
-
 }

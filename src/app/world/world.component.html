@@ -12,11 +12,19 @@
     <input class="text-center" placeholder="размер"
            [(ngModel)]="dataService.size"
            (change)="generate(dataService.size)">
+<<<<<<< Updated upstream
+=======
+    <button class="btn btn-success" (click)="createForest()">лес</button>
+>>>>>>> Stashed changes
   </div>
 </div>
 <div class="world" #world>
   <div
+<<<<<<< Updated upstream
     *ngFor="let m of dataService.arrMapObj; let i = index"
+=======
+    *ngFor="let m of dataService.arrayMapObj; let i = index"
+>>>>>>> Stashed changes
   >
     <div class="world__meter"
          *ngFor="let n of m; let j = index"
@@ -27,6 +35,7 @@
            [attr.coordY]="j"
            [ngClass]="getClass(i, j)"
            (click)="clickMeter($event)"
+<<<<<<< Updated upstream
       >
         <div *ngIf="dataService.arrMapObj[i][j].obj">
           <div *ngIf="dataService.arrMapObj[i][j].obj.health < dataService.arrMapObj[i][j].obj.maxHealth">
@@ -43,6 +52,9 @@
           </div>
         </div>
       </div>
+=======
+      ></div>
+>>>>>>> Stashed changes
     </div>
   </div>
 
